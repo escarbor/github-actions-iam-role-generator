@@ -80,7 +80,8 @@ def add_static_policies(policy_list):
         "Effect": "Allow",
         "Action": [
             "s3:PutObject",
-            "s3:PutObjectAcl"
+            "s3:PutObjectAcl",
+            "s3:DeleteObject"
         ],
         "Resource": f'arn:aws:s3:::{args.bucket_name}/*' if args.bucket_name != '*' else '*'
     }
