@@ -2,7 +2,7 @@ import boto3
 from datetime import datetime, timedelta
 import json
 import argparse
-
+import os
 
 ## Handle args
 default_start_time = datetime.utcnow()
@@ -14,6 +14,10 @@ parser.add_argument("-s", "--start_time", help="Start time in utc timestamp, wit
 parser.add_argument("-e", "--end_time", help="End time in utc timestamp, with a default of 1 hour ago, unless defined", type=lambda s: datetime.strptime(s, '%Y-%m-%d-%H:%M:%S'))
 
 args = parser.parse_args()
+
+if os.getenv("AWS_PROFILE") is None:
+    print("IAM User not set: set using 'export AWS_PROFILE=profile_name'")
+    quit()
 
 client = boto3.client('cloudtrail')
 result_list = []
